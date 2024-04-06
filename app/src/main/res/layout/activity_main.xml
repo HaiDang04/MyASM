@@ -7,23 +7,57 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="Danh SÁch OTO"
-        android:textSize="25dp"
-        android:textColor="#F10606"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danh SÁch OTO"
+            android:textSize="25dp"
+            android:textColor="#F10606"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
 
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Tìm kiếm..."
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSortAsc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tăng dần"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnSortDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giảm dần"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvSanPham"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="160dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fltAdd"

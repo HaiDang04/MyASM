@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="10dp">
     <TextView
@@ -19,6 +20,12 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:orientation="vertical">
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:id="@+id/imgaddAnhXe"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:srcCompat="@drawable/anh" />
         <EditText
             android:id="@+id/edtTenOTO"
             android:layout_width="match_parent"

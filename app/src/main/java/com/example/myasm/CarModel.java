@@ -9,12 +9,22 @@ public class CarModel {
     private String hang;
 
     private double gia;
+    private String hinhAnh;
 
-    public CarModel(String ten, int namSX, String hang, double gia) {
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
+    }
+
+    public CarModel(String ten, int namSX, String hang, double gia, String hinhAnh) {
         this.ten = ten;
         this.namSX = namSX;
         this.hang = hang;
         this.gia = gia;
+        this.hinhAnh = hinhAnh;
     }
 
     public String get_id() {
@@ -57,12 +67,12 @@ public class CarModel {
         this.gia = gia;
     }
 
-    public CarModel(String _id, String ten, int namSX, String hang, double gia) {
+    public CarModel(String _id, String ten, int namSX, String hang, double gia, String hinhAnh) {
         this._id = _id;
         this.ten = ten;
         this.namSX = namSX;
         this.hang = hang;
         this.gia = gia;
+        this.hinhAnh = hinhAnh;
     }
-
 }

@@ -15,9 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,6 +36,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
     private APIService apiService;
     private CarModel carModel;
 
+    private ActivityResultLauncher<String> activityResultLauncher;
 
     public CarAdapter(List<CarModel> carModelList, Context context) {
         this.carModelList = carModelList;
@@ -52,6 +57,14 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
         holder.tvNamSX.setText(String.valueOf(carModelList.get(position).getNamSX()));
         holder.tvHang.setText(carModelList.get(position).getHang());
         holder.tvGia.setText(String.valueOf(carModelList.get(position).getGia()));
+
+        String imageUrl = carModelList.get(position).getHinhAnh();
+        String newUrl = imageUrl.replace("localhost", "10.0.2.2");
+        Glide.with(context)
+                .load(newUrl)
+                .thumbnail(Glide.with(context).load(R.drawable.anh))
+                .into(holder.imgAvatar);
+
 
         holder.btnSua.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +105,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
                                 Toast.makeText(context, "Lỗi khi xóa dữ liệu", Toast.LENGTH_SHORT).show();
                             }
                         });
-
                     }
                 });
                 // Nút "Không"
@@ -135,20 +147,29 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_sua, null);
         builder.setView(view);
-
         AlertDialog dialog = builder.create();
         dialog.show();
+
             EditText edtTen = view.findViewById(R.id.edtTenOTO_sua);
             EditText edtNamSX = view.findViewById(R.id.edtNamSX_sua);
             EditText edtHang = view.findViewById(R.id.edtHang_sua);
             EditText edtGia = view.findViewById(R.id.edtGia_sua);
             Button btnSuas = view.findViewById(R.id.btnupdate);
+            ImageView anhXe = view.findViewById(R.id.imgUPdateAnhXe);
+
 
             edtTen.setText(carModelList.get(position).getTen());
             edtNamSX.setText(String.valueOf(carModelList.get(position).getNamSX()));
             edtHang.setText(carModelList.get(position).getHang());
             edtGia.setText(String.valueOf(carModelList.get(position).getGia()));
+            String imageUrl = carModelList.get(position).getHinhAnh();
+            String newUrl = imageUrl.replace("localhost", "10.0.2.2"); // Thay đổi nếu cần
+            Glide.with(context)
+                .load(newUrl)
+                .into(anhXe);
+
             apiService = RetrofitClientInstance.getRetrofitInstance().create(APIService.class);
+
             // Xử lý sự kiện khi người dùng nhấn nút "Sửa"
             btnSuas.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -158,7 +179,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
                  String hang =    edtHang.getText().toString();
                  Double gia =  Double.parseDouble(edtGia.getText().toString());
 
-                    CarModel carWithoutImageRequest = new CarModel(tenXe, namSX, hang, gia);
+                    CarModel carWithoutImageRequest = new CarModel(tenXe, namSX, hang, gia, "");
                     Call<Response<CarModel>> call = apiService.updateCarById(carModelList.get(position).get_id(), carWithoutImageRequest);
 
                     call.enqueue(new Callback<Response<CarModel>>() {
