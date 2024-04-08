@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface APIService {
-    String DOMAIN = "http://192.168.1.249:3000/";//192.168.1.249:3000
+    String DOMAIN = "http://10.24.33.63:3000/";//192.168.1.249:3000
     @GET("/api/list")
     Call<List<CarModel>> getCars();
     @POST("/api/addCar")
