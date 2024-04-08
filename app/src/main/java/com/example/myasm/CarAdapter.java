@@ -41,7 +41,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
     public CarAdapter(List<CarModel> carModelList, Context context) {
         this.carModelList = carModelList;
         this.context = context;
+    }
 
+    public void updateList(List<CarModel> newList) {
+        carModelList.clear();
+        carModelList.addAll(newList);
+        notifyDataSetChanged();
     }
     @NonNull
     @Override
@@ -58,12 +63,26 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
         holder.tvHang.setText(carModelList.get(position).getHang());
         holder.tvGia.setText(String.valueOf(carModelList.get(position).getGia()));
 
-        String imageUrl = carModelList.get(position).getHinhAnh();
-        String newUrl = imageUrl.replace("localhost", "10.0.2.2");
-        Glide.with(context)
-                .load(newUrl)
-                .thumbnail(Glide.with(context).load(R.drawable.anh))
-                .into(holder.imgAvatar);
+        String imageUrl = carModelList.get(position).getAnh();
+        if (imageUrl != null) {
+            // Nếu imageUrl không null, mới thực hiện replace
+            String newUrl = imageUrl.replace("localhost", "10.24.12.29");
+            Glide.with(context)
+                    .load(newUrl)
+                    .thumbnail(Glide.with(context).load(R.drawable.anh))
+                    .into(holder.imgAvatar);
+        } else {
+            // Nếu imageUrl là null, bạn có thể set một ảnh mặc định
+            Glide.with(context)
+                    .load(R.drawable.anh)
+                    .into(holder.imgAvatar);
+        }
+
+//        String newUrl = imageUrl.replace("localhost", "10.0.2.2");
+//        Glide.with(context)
+//                .load(newUrl)
+//                .thumbnail(Glide.with(context).load(R.drawable.anh))
+//                .into(holder.imgAvatar);
 
 
         holder.btnSua.setOnClickListener(new View.OnClickListener() {
@@ -162,11 +181,25 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
             edtNamSX.setText(String.valueOf(carModelList.get(position).getNamSX()));
             edtHang.setText(carModelList.get(position).getHang());
             edtGia.setText(String.valueOf(carModelList.get(position).getGia()));
-            String imageUrl = carModelList.get(position).getHinhAnh();
-            String newUrl = imageUrl.replace("localhost", "10.0.2.2"); // Thay đổi nếu cần
+            String imageUrl = carModelList.get(position).getAnh();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            // Chỉ thực hiện thay thế nếu chuỗi không null và không rỗng
+            String newUrl = imageUrl.replace("localhost", "10.0.2.2");
+            // Sử dụng Glide để tải và hiển thị hình ảnh từ newUrl
             Glide.with(context)
-                .load(newUrl)
-                .into(anhXe);
+                    .load(newUrl)
+                    .into(anhXe);
+        } else {
+            // Xử lý trường hợp không có URL hình ảnh hoặc chuỗi null bằng cách hiển thị hình ảnh mặc định
+            Glide.with(context)
+                    .load(R.drawable.anh) // Giả sử default_image là tên của hình ảnh mặc định trong drawable
+                    .into(anhXe);
+        }
+
+//            String newUrl = imageUrl.replace("localhost", "10.0.2.2"); // Thay đổi nếu cần
+//            Glide.with(context)
+//                .load(newUrl)
+//                .into(anhXe);
 
             apiService = RetrofitClientInstance.getRetrofitInstance().create(APIService.class);
 
